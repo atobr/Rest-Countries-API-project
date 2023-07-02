@@ -1,38 +1,65 @@
-.App {
-  text-align: center;
+.App{
+  background: #FAFAFA;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App-header{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background: #FFF;
+  height: 80px;
+  width: auto;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.06);
+  padding: 0 81px 0 81px;
 }
 
-.App-link {
-  color: #61dafb;
+.App-header h3{
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  padding: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.container{
+  margin: 48px 80px;
+}
+
+.mode__control{
+  display: flex;
+  flex-direction: row;
+}
+
+.countries__bottom{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 74px;
+}
+
+.country__card{
+  width: 264px;
+  height: 336px;
+  border-radius: 5px;
+  background: #FFF;
+  box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.03);
+}
+
+.country__img img{
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+}
+
+.country__data{
+  margin: 24px auto auto 24px;
+}
+.country__data h6{
+  margin: 8px 0;
+  font-weight: normal;
+  font-size: 14px;
+}
+.country__data h6 b{
+  font-weight: bold;
+}
+.country__data h4{
+  font-size: 18px;
+  margin: 24px 0 16px 0;
 }
