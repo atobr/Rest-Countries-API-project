@@ -22,7 +22,6 @@
   #search{
     border: none;
     outline: none;
-    height: 100%;
     width: 100%;
     margin-right: 32px;
   }
@@ -41,8 +40,16 @@
     margin: 48px auto;
 }
 
+
+/* TABLET SCREEN VIEW */
+@media screen and (min-width: 700px) and (max-width: 900px) {
+  .search-div{
+    width: 400px;
+  }
+}
+
 /* MOBILE SCREEN VIEW */
-@media only screen and (min-width: 320px) and (max-width: 430px) {
+@media screen and (min-width: 320px) and (max-width: 430px) {
     .search-options {
     flex-direction: column;
     }

@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Mode(){
-    const [mode, setMode] = useState(localStorage.mode);
+    const [mode, setMode] = useState(() => localStorage.getItem('mode') || 'light');
+
+    useEffect(() => {
+        localStorage.setItem('mode', mode);
+
+        const countryCard: any = document.querySelectorAll('.country__card');
+        const borders: any = document.querySelectorAll('.border');
+
+        document.querySelector('.App')!.className = `App ${mode}`;
+        document.querySelector('.App-header')!.className = `App-header ${mode}`;
+
+        if(window.location.href.indexOf('country') === -1){
+            document.querySelector('.search-div')!.className = `search-div ${mode}`;
+            document.querySelector('#search')!.className = `${mode}`;
+            document.querySelector('.filter')!.className = `filter ${mode}`;
+            document.querySelector('#region')!.className = `${mode}`;
+            countryCard.forEach((card: any) => card.className = `country__card ${mode}`);  
+        }
+                          
+        if(window.location.href.indexOf('country') > -1){
+            document.querySelector('.button__back')!.className = `button__back ${mode}`;
+            document.querySelector('#back')!.className = `${mode}`;
+            borders.forEach((border: any) => border.className = `border ${mode}`);
+        }
+
+    }, [mode]);
 
     const handleClick = () => {
-        localStorage.mode === 'light' ? localStorage.setItem('mode', 'dark') : localStorage.setItem('mode', 'light');
-        setMode(localStorage.mode);
+        setMode(currentMode => (currentMode === 'light'? 'dark' : 'light'));
     }
-    console.log(mode);
 
-//     useEffect(()=>{
-//         document.addEventListener('click', handleClick);
-//     // return() => {
-//     //     document.removeEventListener('click', handleClick);
-//     // }
-// }, []);
-    
     return(
         <div className='mode__control' onClick={handleClick}>
             <div className='mode__select'>

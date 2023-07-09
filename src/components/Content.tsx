@@ -11,23 +11,29 @@ function Content(){
     const [countries, setCountries] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [found, setFound] = useState<boolean>(false);
+
+    const handleError = (error: Error) => setError(error.message);
 
     const webData = async () => {
         try {
             const response = await fetch(`${apiURL}/all`);
 
-            if(!response) throw new Error('Something went wrong');
-            const data = await response.json();
-
-            console.log(data);
-            setCountries(data);
-            setLoading(false);
-
+            if (response.ok) {
+                const data = await response.json();
+                setCountries(data);
+                setLoading(false);
+                setFound(true);
+            } else {
+                throw new Error('Something went wrong!');
+            }
+        
         } catch (error: any) {
             setLoading(false);
-            setError(error.message);
+            handleError(error);
         }
     }
+
 
     const getCountryByName = async (countryName:string) => {
         try {
@@ -38,19 +44,20 @@ function Content(){
                 response = await fetch(`${apiURL}/name/${countryName}`);
             }
 
-
-            if(!response) throw new Error('Country not found!');
-            const data = await response.json();
-
-            setCountries(data);
-            setLoading(false);
+            if (response.ok) {
+                const data = await response.json();
+                setCountries(data);
+                setLoading(false);
+                setFound(true);
+            } else {
+                setFound(false);
+            }
 
         } catch (error: any) {
             setLoading(false);
-            console.log(error.message);
-            setError(error.message);
         }
     }
+
 
     const getCountryByRegion = async (regionName:string) => {
         try {
@@ -61,16 +68,18 @@ function Content(){
                 response = await fetch(`${apiURL}/region/${regionName}`);
             }
             
-            if(!response) throw new Error('Region not found!');
-            const data = await response.json();
-
-            setCountries(data);
-            setLoading(false);
-
+            if (response.ok) {
+                const data = await response.json();
+                setCountries(data);
+                setLoading(false);
+                setFound(true);
+            } else {
+                throw new Error('Region not found');
+            }
+            
         } catch (error: any) {
             setLoading(false);
-            console.log(error.message);
-            setError(error.message);
+            handleError(error);
         }
     }
 
@@ -95,8 +104,9 @@ function Content(){
             <div className='countries__bottom'>
                  {loading && !error && <h2>Loading....</h2>}   
                  {!loading && error && <h2>{error}</h2>}
+                 {!loading && !error && !found && <h2>Country not found!</h2>}
 
-                {
+                {!loading && !error && found &&
                     countries?.map((country, index) => (
                             <Link to={`/country/${country.name.common}`} key={index} >
                                 <div className={`country__card ${localStorage.mode}`} >

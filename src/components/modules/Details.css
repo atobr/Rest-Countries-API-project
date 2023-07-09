@@ -134,14 +134,14 @@
 
 
 /* SMALL LAPTOP SCREEN */
-@media only screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
     .country__details-img img{
         width: auto;
     }
 }
 
 /* TABLET SCREEN VIEW */
-@media only screen and (min-width: 700px) and (max-width: 900px) {
+@media screen and (min-width: 700px) and (max-width: 900px) {
     .country__details, .country__info{
         display: flex;
         flex-direction: column;
@@ -171,7 +171,7 @@
 }
 
 /* MOBILE SCREEN VIEW */
-@media only screen and (min-width: 320px) and (max-width: 430px) {
+@media screen and (min-width: 320px) and (max-width: 430px) {
     .country__details__container{
         flex-direction: column;
     }

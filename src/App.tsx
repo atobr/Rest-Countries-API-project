@@ -6,7 +6,6 @@ import Content from './components/Content';
 import Details from './components/Details';
 
 function App() {
-
   return (
     <div className={`App ${localStorage.mode}`}>
       <div className={`App-header ${localStorage.mode}`}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useHref } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { apiURL } from "../util/api";
 import './modules/Details.css';
 
@@ -40,7 +40,7 @@ function Details(){
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path fillRule="evenodd" clipRule="evenodd" d="M6.46447 4.10744L7.64298 5.28596L3.75389 9.17504L18.6031 9.17504L18.6031 10.825L3.75389 10.825L7.64298 14.714L6.46447 15.8926L0.57191 10L6.46447 4.10744Z" fill={fill}/>
                     </svg>
-                    <p className={localStorage.mode}>Back</p>
+                    <p id='back' className={localStorage.mode}>Back</p>
                 </Link>
             </button>
    
@@ -82,7 +82,7 @@ function Details(){
                                 <h5><b>Border Countries: </b> 
                                     <div>
                                         { country.borders ? Object.values<any>(country.borders).map(border => (
-                                            <p key={border} className={localStorage.mode}>{border}</p>
+                                            <p key={border} className={`border ${localStorage.mode}`}>{border}</p>
                                         )) : ''} 
                                     </div>
                                 </h5>
