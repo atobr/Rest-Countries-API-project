@@ -10,26 +10,25 @@ function Details(){
 
     const {countryName} = useParams();
 
-    const getCountryByName = async () => {
-        try {
-            const response = await fetch(`${apiURL}/name/${countryName}`);
-
-            if(!response) throw new Error('Country not found!');
-            const data = await response.json();
-
-            setCountry(data);
-            setLoading(false);
-
-        } catch (error: any) {
-            setLoading(false);
-            console.log(error.message);
-            setError(error.message);
-        }
-    }
-
     useEffect(()=>{
+        const getCountryByName = async () => {
+            try {
+                const response = await fetch(`${apiURL}/name/${countryName}`);
+    
+                if(!response) throw new Error('Country not found!');
+                const data = await response.json();
+    
+                setCountry(data);
+                setLoading(false);
+    
+            } catch (error: any) {
+                setLoading(false);
+                console.log(error.message);
+                setError(error.message);
+            }
+        }
         getCountryByName();
-    },[countryName])
+    }, [countryName])
 
     let fill = localStorage.mode === 'dark' ? '#fff' : '#111517';
 

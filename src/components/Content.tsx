@@ -15,26 +15,6 @@ function Content(){
 
     const handleError = (error: Error) => setError(error.message);
 
-    const webData = async () => {
-        try {
-            const response = await fetch(`${apiURL}/all`);
-
-            if (response.ok) {
-                const data = await response.json();
-                setCountries(data);
-                setLoading(false);
-                setFound(true);
-            } else {
-                throw new Error('Something went wrong!');
-            }
-        
-        } catch (error: any) {
-            setLoading(false);
-            handleError(error);
-        }
-    }
-
-
     const getCountryByName = async (countryName:string) => {
         try {
             let response;
@@ -84,6 +64,24 @@ function Content(){
     }
 
     useEffect(() => {
+        const webData = async () => {
+            try {
+                const response = await fetch(`${apiURL}/all`);
+    
+                if (response.ok) {
+                    const data = await response.json();
+                    setCountries(data);
+                    setLoading(false);
+                    setFound(true);
+                } else {
+                    throw new Error('Something went wrong!');
+                }
+            
+            } catch (error: any) {
+                setLoading(false);
+                handleError(error);
+            }
+        };
         webData();
     }, []);
 
