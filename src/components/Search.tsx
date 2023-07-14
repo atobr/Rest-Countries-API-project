@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
+
 import './modules/Search.css';
 
-function Search(props:any){
+interface getCountryByNameProps{
+    onSearch: (countryName: string) => void;
+}
+
+function Search({onSearch}: getCountryByNameProps){
     const [input, setInput] = useState('');
-    
-    const handleChange = (e:any) => {
-        setInput(e.target.value);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const countryName = e.target.value;
+        setInput(countryName);
     }
-    const handleSubmit = (e:any) => {
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        props.onSearch(input);
+        setInput(input);
+        localStorage.setItem('countryName', `${input}`);
+        onSearch(input);
     }
+
 
     return(
         <form onSubmit={handleSubmit}>

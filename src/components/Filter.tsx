@@ -1,24 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import {Region} from './Types'
+
 import './modules/Filter.css';
 
-function Filter(props: any){
+interface getCountryByRegionProps {
+    onSelect: (regionName: string) => void;
+}
 
-    const handleChange = (e:any) =>{
+function Filter({onSelect}: getCountryByRegionProps){
+    const [selectedRegion, setSelectedRegion] = useState('');
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) =>{
         const regionName = e.target.value;
-        props.onSelect(regionName);
+        localStorage.setItem('regionName', `${regionName}`);
+        setSelectedRegion(regionName);
+        onSelect(regionName);
     }
 
     return(
         <div>
             <label htmlFor='region' placeholder='Filter by region'></label>
-                    <select name="region" id="region" className={`${localStorage.mode}`} onChange={handleChange}>
+                <div>
+                    <select value = {selectedRegion} name="region" id="region" className={`${localStorage.mode}`} onChange={handleChange}>
                         <option value=''>Filter by Region</option>
-                        <option value="Africa">Africa</option>
-                        <option value="America">America</option>
-                        <option value="Asia">Asia</option>
-                        <option value="Europe">Europe</option>
-                        <option value="Oceania">Oceania</option>
+                        <option value={Region.Africa} >Africa</option>
+                        <option value={Region.Americas}>Americas</option>
+                        <option value={Region.Asia}>Asia</option>
+                        <option value={Region.Europe}>Europe</option>
+                        <option value={Region.Oceania}>Oceania</option>
                     </select>
+                </div>
         </div>
     )
 }

@@ -3,32 +3,46 @@ import { useParams, Link } from "react-router-dom";
 import { apiURL } from "../util/api";
 import './modules/Details.css';
 
+import { Types } from "./Types";
+
 function Details(){
-    const [country, setCountry] = useState<any[]>([]);
+
+    const [countries, setCountries] = useState<Types[]>([]);
+    const [country, setCountry] = useState<Types[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
     const {countryName} = useParams();
 
+    let borders: {[key: string]: string} = {};
+    for(let i=0; i < countries.length; i++){
+        borders[countries[i].cca3] = countries[i].name.common;
+    }
+
     useEffect(()=>{
-        const getCountryByName = async () => {
+        const getCountries = async () => {
             try {
-                const response = await fetch(`${apiURL}/name/${countryName}`);
+                const response = await fetch(`${apiURL}/all`);
     
                 if(!response) throw new Error('Country not found!');
                 const data = await response.json();
-    
-                setCountry(data);
+                setCountries(data);
                 setLoading(false);
-    
             } catch (error: any) {
                 setLoading(false);
                 console.log(error.message);
                 setError(error.message);
             }
         }
+
+        const getCountryByName = () =>{
+            const country = countries.filter(country => country.name.common === countryName);
+            setCountry(country);
+        }
+
+        getCountries();
         getCountryByName();
-    }, [countryName])
+    }, [countryName, countries]);
 
     let fill = localStorage.mode === 'dark' ? '#fff' : '#111517';
 
@@ -47,7 +61,7 @@ function Details(){
             {!loading && error && <h2>{error}</h2>}
 
             {
-                country.map((country: any, index)=>(
+                country.map((country)=>(
                     <div className="country__details__container" key={country.ccn3}>
                         <div className="country__details-img">
                             <img src={country.flags.png} alt={country.flags.alt} />
@@ -58,7 +72,7 @@ function Details(){
 
                             <div className="country__info">
                                 <div className="country__details-left">
-                                    <h5><b>Native Name:</b> { country.name.nativeName ? (Object.values<any>(country.name.nativeName))[0].official : country.name.common }</h5>
+                                    <h5><b>Native Name:</b> { country.name.nativeName ? (Object.values(country.name.nativeName))[0].official : country.name.common }</h5>
                                     <h5><b>Population:</b> { new Intl.NumberFormat().format(country.population) }</h5>
                                     <h5><b>Region:</b> {country.region}</h5>
                                     <h5><b>Sub Region:</b> {country.subregion}</h5>
@@ -69,10 +83,10 @@ function Details(){
                                     <h5><b>Top Level Domain:</b> {country.tld}</h5>
                                     <h5>
                                         <b>Currencies: </b> 
-                                        { country.currencies ? (Object.values<any>(country.currencies))[0].name : '' }
+                                        { country.currencies ? (Object.values(country.currencies))[0].name : '' }
                                     </h5>
                                     <h5 className="languages"><b>Languages: </b> 
-                                        { country.languages ? Object.values<any>(country.languages).join(', ') : '' }
+                                        { country.languages ? Object.values(country.languages).join(', ') : '' }
                                     </h5>
                                 </div>
                             </div>
@@ -80,8 +94,10 @@ function Details(){
                             <div className="border__countries">
                                 <h5><b>Border Countries: </b> 
                                     <div>
-                                        { country.borders ? Object.values<any>(country.borders).map(border => (
-                                            <p key={border} className={`border ${localStorage.mode}`}>{border}</p>
+                                        { country.borders ? Object.values(country.borders).map(border => (
+                                            <p key={border} className={`border ${localStorage.mode}`}>
+                                                {borders[border]}
+                                            </p>
                                         )) : ''} 
                                     </div>
                                 </h5>

@@ -39,6 +39,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    justify-content: space-between;
 }
 
 .country__details h3{
@@ -56,7 +57,7 @@
     width: 550px;
     height: auto;
     border-radius: 10px;
-    margin-right: 80px;
+    margin-right: 70px;
 }
   
 .country__details-left h3{
@@ -97,6 +98,13 @@
     padding-right: 4px;
   }
   
+  /* .border__countries{
+    width: 100%;
+    display: flex;
+    height: auto;
+    flex-wrap: wrap;
+} */
+
   .border__countries h5{
     display: flex;
     flex-direction: row;

@@ -3,73 +3,71 @@ import { apiURL } from '../util/api';
 import { Link } from 'react-router-dom';
 import Search from './Search';
 import Filter from './Filter';
+import { Types } from './Types'
 
 import './modules/Content.css';
 
 function Content(){
     
-    const [countries, setCountries] = useState<any[]>([]);
+    const [allCountries, setAllCountries] = useState<Types[]>([]);
+    const [countries, setCountries] = useState<Types[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [found, setFound] = useState<boolean>(false);
+    const [found, setFound] = useState<boolean>();
 
-    const handleError = (error: Error) => setError(error.message);
-
-    const getCountryByName = async (countryName:string) => {
-        try {
-            let response;
-            if(!countryName){
-                response = await fetch(`${apiURL}/all`);
-            } else { 
-                response = await fetch(`${apiURL}/name/${countryName}`);
-            }
-
-            if (response.ok) {
-                const data = await response.json();
-                setCountries(data);
-                setLoading(false);
-                setFound(true);
-            } else {
-                setFound(false);
-            }
-
-        } catch (error: any) {
-            setLoading(false);
+    const getCountryByName = (countryName: string) => {
+        let getCountries: Types[];
+        if(countryName !== '' && localStorage.regionName !==''){
+            getCountries = allCountries.filter(country => {
+            return country.name.common.toLowerCase().includes(countryName.toLowerCase()) && country.region === localStorage.regionName;
+            });
+        } 
+        else if(countryName ==='' && localStorage.regionName !== ''){
+            getCountries = allCountries.filter(country => country.region === localStorage.regionName);
         }
+        else if(countryName !=='' && localStorage.regionName ===''){
+            getCountries = allCountries.filter(country => country.name.common.toLowerCase().includes(localStorage.countryName.toLowerCase()));
+        }
+        else{
+            getCountries = allCountries;     
+        }
+        setCountries(getCountries);
+        setLoading(false);
+        getCountries.length > 0 ? setFound(true) : setFound(false);
     }
 
 
-    const getCountryByRegion = async (regionName:string) => {
-        try {
-            let response;
-            if(!regionName){
-                response = await fetch(`${apiURL}/all`);
-            } else {
-                response = await fetch(`${apiURL}/region/${regionName}`);
-            }
-            
-            if (response.ok) {
-                const data = await response.json();
-                setCountries(data);
-                setLoading(false);
-                setFound(true);
-            } else {
-                throw new Error('Region not found');
-            }
-            
-        } catch (error: any) {
-            setLoading(false);
-            handleError(error);
+    const getCountryByRegion = (regionName:string) => {
+        let getCountries: Types[];
+        if(localStorage.countryName !== '' && regionName !==''){
+           getCountries = allCountries.filter(country => {
+            return country.region === regionName && country.name.common.toLowerCase().includes(localStorage.countryName.toLowerCase());
+        }); 
+        } 
+        else if(localStorage.countryName === '' && regionName !== ''){
+            getCountries = allCountries.filter(country => country.region === regionName);
         }
+        else if(localStorage.countryName !== '' && regionName === ''){
+            getCountries = allCountries.filter(country => country.name.common.toLowerCase().includes(localStorage.countryName.toLowerCase()));
+        }
+        else{
+            getCountries = allCountries;
+        }
+    
+        setCountries(getCountries); 
+        setLoading(false);
+        getCountries.length > 0 ? setFound(true) : setFound(false);
     }
 
+
+    
     useEffect(() => {
         const webData = async () => {
             try {
-                const response = await fetch(`${apiURL}/all`);
-    
+                const response = await fetch(`${apiURL}/all`);  
                 if (response.ok) {
-                    const data = await response.json();
+                    const data: Types[] = await response.json();
+                    setAllCountries(data);
                     setCountries(data);
                     setLoading(false);
                     setFound(true);
@@ -79,9 +77,9 @@ function Content(){
             
             } catch (error: any) {
                 setLoading(false);
-                handleError(error);
+                setError(error.message);
             }
-        };
+        };    
         webData();
     }, []);
 
@@ -105,8 +103,8 @@ function Content(){
                  {!loading && !error && !found && <h2>Country not found!</h2>}
 
                 {!loading && !error && found &&
-                    countries?.map((country, index) => (
-                            <Link to={`/country/${country.name.common}`} key={index} >
+                    countries?.map((country) => (
+                            <Link to={`/country/${country.name.common}`} key={country.cca3} >
                                 <div className={`country__card ${localStorage.mode}`} >
                                     <div className='country__img'>
                                         <img src={country.flags.png} alt={country.flags.alt} />
