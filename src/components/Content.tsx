@@ -8,7 +8,6 @@ import { Types } from './Types'
 import './modules/Content.css';
 
 function Content(){
-    
     const [allCountries, setAllCountries] = useState<Types[]>([]);
     const [countries, setCountries] = useState<Types[]>([]);
     const [loading, setLoading] = useState(true);
