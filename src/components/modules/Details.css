@@ -83,6 +83,11 @@
     font-weight: 600;
     font-size: 16px;
   }
+
+  .border__countries h5 b{
+    width: 170px;
+    margin: 10px 0 10px 0;
+  }
   
   .country__details-right{
     margin-left: 80px;
@@ -98,12 +103,11 @@
     padding-right: 4px;
   }
   
-  /* .border__countries{
+  .border__countries div{
     width: 100%;
     display: flex;
-    height: auto;
     flex-wrap: wrap;
-} */
+}
 
   .border__countries h5{
     display: flex;
@@ -115,7 +119,7 @@
   }
   
 .border__countries h5 div p {
-    margin: 0 0 auto 10px;
+    margin: 10px 0 auto 10px;
     border-radius: 2px;
     border: 0px solid #979797;
     box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.10);
@@ -174,7 +178,7 @@
         margin-right: 60px;
     }
     .border__countries h5 div p{
-        margin: auto 10px auto 0;
+        margin: auto 10px 10px 0;
     }
 }
 
@@ -206,6 +210,9 @@
         flex-direction: row;
     }
     .border__countries h5 div p{
-        margin: auto 10px auto 0;
+        margin: auto 10px 10px 0;
+    }
+    .country__details-img img {
+        margin: 0;
     }
 }

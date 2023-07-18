@@ -2,6 +2,7 @@
     width: 89%;
     margin: auto;
     padding-bottom: 50px;
+    min-height: 100vh;
 }
 
 .mode__control{

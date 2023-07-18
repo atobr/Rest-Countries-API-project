@@ -32,3 +32,12 @@
 }
 
 
+
+/* LARGER SCREENS VIEW */
+@media screen and (min-width: 1441px){
+  .App-header{
+    width: 1280px;
+    padding: 0 25% 0 25%;
+  }
+}
+
