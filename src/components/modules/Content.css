@@ -65,9 +65,12 @@ a{
 
 /* LARGER LAPTOP SCREEN VIEW */
 @media screen and (min-width: 1441px) {
+  .container{
+    width: 1280px;
+  }
   .countries__bottom{
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: auto;
   }
 }
@@ -84,7 +87,6 @@ a{
 /* TABLET SCREEN VIEW */
 @media screen and (min-width: 700px) and (max-width: 900px) {
   .countries__bottom{
-    /* display: grid; */
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
@@ -93,8 +95,6 @@ a{
 /* MOBILE SCREEN VIEW */
 @media screen and (min-width: 320px) and (max-width: 430px) {
   .countries__bottom{
-    /* display: grid; */
     grid-template-columns: 1fr;
-    /* gap: 70px; */
   }
 }
