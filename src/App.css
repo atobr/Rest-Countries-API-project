@@ -31,6 +31,10 @@
   padding: 0;
 }
 
+.mode__control:hover{
+  cursor: pointer;
+}
+
 
 
 /* LARGER SCREENS VIEW */
