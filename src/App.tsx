@@ -11,8 +11,11 @@ function App() {
   return (
     <div className={`App ${localStorage.mode}`}>
       <div className={`App-header ${localStorage.mode}`}>
-        <h3>Where in the world? </h3>
-        <Mode />
+        <div className="App-header__container">
+          <h3>Where in the world? </h3>
+          <Mode />
+        </div>
+        
       </div>
       <div className="container">
         <Routes>
